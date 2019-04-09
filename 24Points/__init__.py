@@ -114,9 +114,9 @@ def main():
     tfP = TwentyFourPoint(7, 8, 6, 5)
 
     #有顺序要求
-    #print('Result in order is:')
-    #tfP.GetResult(True)
-    #tfP.PrintResult()
+    print('Result in order is:')
+    tfP.GetResult(True)
+    tfP.PrintResult()
 
     #无顺序要求
     print('Result with no order is:')
