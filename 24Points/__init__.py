@@ -104,13 +104,6 @@ class TwentyFourPoint:
 def main():
 
     #--------------单个测试-------------#
-    #tfP = TwentyFourPoint(1,2,3,4)
-    #tfP = TwentyFourPoint(3, 5, 7, 8)
-    #tfP = TwentyFourPoint(1, 3, 9, 10)
-    #tfP = TwentyFourPoint(3, 1, 10, 9)
-    #tfP = TwentyFourPoint(27, 3, 2, 1)
-    #tfP = TwentyFourPoint(28, 3, 2, 1)
-    #tfP = TwentyFourPoint(7, 8, 6, 9)
     tfP = TwentyFourPoint(7, 8, 6, 5)
 
     #有顺序要求
