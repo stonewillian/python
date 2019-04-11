@@ -102,7 +102,6 @@ class TwentyFourPoint:
             print(k)
 
 def main():
-
     #--------------单个测试-------------#
     tfP = TwentyFourPoint(7, 8, 6, 5)
 
