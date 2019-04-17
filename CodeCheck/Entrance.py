@@ -1,6 +1,7 @@
 #coding:UTF-8
 import os
 import container.ARESCheck
+import container.CRESCheck
 
-aresCheck = container.ARESCheck.AresCheck()
-aresCheck.DealPath('')
+container.ARESCheck.DoAresCheck()
+container.CRESCheck.DoCresCheck()
