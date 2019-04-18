@@ -82,7 +82,6 @@ def DoAresCheck():
 
                 if code != None and code != '':
                     code = public.glbfunc.RemoveNote(code).replace('&#xD;', '')
-
                     lines = code.split('\n')
 
                     ptn = re.compile(r'(hs_strcpy\s*\(.*?\)\s*;)')
@@ -93,7 +92,7 @@ def DoAresCheck():
                         if vars:
                             for var in vars:
                                 if var[0].strip(' ') != var[1].strip(' ') or var[2].replace(' ', '') != '-1':
-                                    print('[{0}]校验失败,文件:[{1}],行号:[{2}],值:[{3}]'.format('hs_strcpy', '\\'.join(fileName.split('\\')[5:]), i, var))
+                                    print('[hs_strcpy]校验失败:请改用hs_strncpy,文件<{0}>,行号<{1}>,内容<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), i, var))
 
     ########################检查hs_strncpy########################
     for uftBusiness in aresCheckSource.UFTBusinessList:
@@ -108,7 +107,6 @@ def DoAresCheck():
 
                 if code != None and code != '':
                     code = public.glbfunc.RemoveNote(code).replace('&#xD;','')
-
                     lines = code.split('\n')
 
                     ptn = re.compile(r'hs_strncpy\s*\(@(.*?),.*?,\s*sizeof\s*\(\s*@(.*?)\)(\s*-*\s*1*)\s*\)\s*;')
@@ -119,7 +117,7 @@ def DoAresCheck():
                         if vars:
                             for var in vars:
                                 if var[0].strip(' ') != var[1].strip(' ') or var[2].replace(' ', '') != '-1':
-                                    print('[{0}]校验失败,文件:[{1}],行号:[{2}],值:[{3}]'.format('hs_strncpy', '\\'.join(fileName.split('\\')[5:]), i, var))
+                                    print('[hs_strncpy]校验失败:未使用字段本身长度减1,文件<{0}>,行号<{1}>,内容<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), i, var))
 
     ########################检查hs_snprintf########################
     for uftBusiness in aresCheckSource.UFTBusinessList:
@@ -145,4 +143,4 @@ def DoAresCheck():
                             for var in vars:
                                 # print(path + file, i, var)
                                 if var[0].strip(' ') != var[1].strip(' ') or var[2].replace(' ', '') != '':
-                                    print('[{0}]校验失败,文件:[{1}],行号:[{2}],值:[{3}]'.format('hs_snprintf', '\\'.join(fileName.split('\\')[5:]), i, var))
+                                    print('[hs_snprintf]校验失败:未使用字段本身长度,文件<{0}>,行号<{1}>,内容<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), i, var))
