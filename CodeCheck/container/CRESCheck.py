@@ -16,23 +16,23 @@ class CresCheckSource:
         self.FunctionList = {}
 
     def InitializeSource(self):
-        self.GetStandardFieldList(self.ConfigFile.get('Common', 'ProjectPath') + '\\公共资源\\stdfields.xml')
+        self.GetStandardFieldList()
 
-        self.GetDataTypeList(self.ConfigFile.get('Common', 'ProjectPath') + '\\公共资源\\datatypes.xml')
+        self.GetDataTypeList()
 
         self.GetModuleList(self.ConfigFile.get('Common', 'ProjectPath'), '', 0)
 
     # 'en_branch_no':['HsChar4000', '允许营业部']
-    def GetStandardFieldList(self, fieldFile):
-        RootField = xml.etree.ElementTree.parse(fieldFile).getroot()
+    def GetStandardFieldList(self):
+        RootField = xml.etree.ElementTree.parse(self.ConfigFile.get('Common', 'ProjectPath') + '\\公共资源\\stdfields.xml').getroot()
 
         for stdfield in RootField.findall('stdfield'):
             self.StandardFieldList[stdfield.get('name').strip(' ')] = [stdfield.get('type'),
                                                                        stdfield.get('cname').strip(' ')]
 
     # 'HsType':'char(1)'
-    def GetDataTypeList(self, dataTypeFile):
-        RootDataType = xml.etree.ElementTree.parse(dataTypeFile).getroot()
+    def GetDataTypeList(self):
+        RootDataType = xml.etree.ElementTree.parse(self.ConfigFile.get('Common', 'ProjectPath') + '\\公共资源\\datatypes.xml').getroot()
 
         for DataType in RootDataType.findall('userType'):
             self.DataTypeList[DataType.get('name')] = DataType.find('database').find('map').get('value')
