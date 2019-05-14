@@ -194,13 +194,39 @@ def DoAresCheck():
                                 if var[0].replace(' ', '') not in ['0==', '0!='] and var[1].replace(' ', '') not in ['==0', '!=0']:
                                     print('[hs_strcmp]校验失败:少了==或者!=,文件<{0}>,行号<{1}>,内容<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), i, var))
 
+    ########################检查是否存在日期直接相减########################
+    for uftBusiness in aresCheckSource.UFTBusinessList:
+        for function in aresCheckSource.UFTBusinessList[uftBusiness][1]:
+            fileName = aresCheckSource.UFTBusinessList[uftBusiness][2] + function
+
+            Root = xml.etree.ElementTree.parse(fileName).getroot()
+
+            codeNode = Root.find('code')
+            if codeNode != None:
+                code = codeNode.text
+
+                if code != None and code != '':
+                    code = public.glbfunc.RemoveNote(code).replace('&#xD;', '')
+                    lines = code.split('\n')
+
+                    ptn = re.compile(r'(@.*?date\s*-\s*@.*?date)')
+                    i = 0
+                    for line in lines:
+                        i += 1
+                        vars = re.findall(ptn, line)
+                        if vars:
+                            for var in vars:
+                                # print(fileName, i, var)
+                                print('[日期间隔]校验失败:日期不允许直接相减,文件<{0}>,行号<{1}>,内容<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), i, var))
+
     ########################检查UFT对象长度大于120的字段########################
     for dataMgr in aresCheckSource.DataMgrList:
         #print(dataMgr, aresCheckSource.DataMgrList[dataMgr])
         path = aresCheckSource.DataMgrList[dataMgr][2]
         for uftStructure in aresCheckSource.DataMgrList[dataMgr][1]:
             #print(path + uftStructure)
-            RootUftStructure = xml.etree.ElementTree.parse(path + uftStructure).getroot()
+            fileName = path + uftStructure
+            RootUftStructure = xml.etree.ElementTree.parse(fileName).getroot()
 
             for Properties in RootUftStructure.findall('properties'):
                 stdField = Properties.get('id')
@@ -210,4 +236,4 @@ def DoAresCheck():
                 RealType = aresCheckSource.DataTypeList[dataType]
 
                 if RealType[0] == 'String' and int(RealType[1]) >= 120:
-                    print(path + uftStructure, stdField, RealType[1])
+                    print('[数据长度]校验失败:UFTDB尽量不要使用长度超过120的字段,UFT对象<{0}>,字段<{1}>,长度<{2}>'.format('\\'.join(fileName.split('\\')[-2:]), stdField, RealType[1]))
